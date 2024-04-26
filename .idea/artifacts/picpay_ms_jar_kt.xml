@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="picpay-ms:jar-kt">
+    <output-path>$PROJECT_DIR$/out/artifacts/picpay_ms_jar_kt</output-path>
+    <root id="archive" name="picpay-ms.jar">
+      <element id="module-output" name="picpay-ms" />
+    </root>
+  </artifact>
+</component>
