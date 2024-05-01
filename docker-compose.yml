@@ -14,6 +14,8 @@ services:
       - 5432:5432
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
+    networks:
+      - ms-picpay
 
 
   dcs-pgadmin:
@@ -29,10 +31,12 @@ services:
       - 8082:80
     volumes:
       - ./data/pgadmin:/var/lib/pgadmin
+    networks:
+      - ms-picpay
 
 
   mongo:
-    image: mongo
+    image: mongo:latest
     restart: always
     container_name: mongo-docker
     environment:
@@ -46,6 +50,8 @@ services:
       - type: volume
         source: mongodb_data_volume
         target: /data/db
+    networks:
+      - ms-picpay
 
   mongo-express:
     image: mongo-express
@@ -63,7 +69,62 @@ services:
       ME_CONFIG_MONGODB_URL: mongo://mongoadmin:mongoadmin@mongo:27017/
     depends_on:
       - mongo
+    networks:
+      - ms-picpay
+
+  ms-java:
+    build: ms-java
+    depends_on:
+      - mongo
+    ports:
+      - "8080:8080"
+    networks:
+      - ms-picpay
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    networks:
+      - ms-picpay
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    networks:
+      - ms-picpay
+    depends_on:
+      - zookeeper
+    ports:
+      - 9092:9092
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,EXTERNAL://127.0.0.1:9092,EXTERNAL2://127.0.0.1:9093,EXTERNAL3://127.0.0.1:9094,EXTERNAL4://127.0.0.1:9095
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT,EXTERNAL2:PLAINTEXT,EXTERNAL3:PLAINTEXT,EXTERNAL4:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+      KAFKA_CREATE_TOPICS: order-topic:3:1
+
+  kafdrop:
+    image: obsidiandynamics/kafdrop:latest
+    networks:
+      - ms-picpay
+    depends_on:
+      - kafka
+    ports:
+      - 19000:9000
+    environment:
+      KAFKA_BROKERCONNECT: kafka:29092
+
 
 volumes:
   mongodb_data_volume:
     driver: local
+  postgres_data_volume:
+    driver: local
+
+networks:
+  ms-picpay:
+    driver: bridge

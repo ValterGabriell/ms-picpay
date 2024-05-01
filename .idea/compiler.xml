@@ -9,6 +9,14 @@
         <module name="processing-transferencia" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="banking" target="17" />
+      <module name="banking.main" target="17" />
+      <module name="banking.test" target="17" />
+      <module name="picpay" target="17" />
+      <module name="picpay.main" target="17" />
+      <module name="picpay.test" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

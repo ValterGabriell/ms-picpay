@@ -1,11 +1,8 @@
-server:
-  port: 8089
-
 spring:
   data:
     mongodb:
       authentication-database:  admin
-      uri:  ${MONGO_DB_URI:mongodb://mongoadmin:mongoadmin@127.0.0.1:27017/ms-account?authSource=admin}
+      uri:  ${MONGO_DB_URI:mongodb://mongoadmin:mongoadmin@127.0.0.1:27017/ms-user?authSource=admin}
       auto-index-create: true
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration

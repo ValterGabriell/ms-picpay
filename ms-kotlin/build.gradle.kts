@@ -8,7 +8,7 @@ plugins {
 	kotlin("plugin.jpa") version "1.9.23"
 }
 
-group = "picpay.challenge"
+group = "banking.challenge"
 version = "0.0.1-SNAPSHOT"
 
 java {
@@ -25,6 +25,7 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+	implementation ("org.springframework.kafka:spring-kafka")
 	runtimeOnly("com.h2database:h2")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
