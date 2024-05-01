@@ -8,7 +8,7 @@ Este repositório contém dois microserviços desenvolvidos em Kotlin e Java, re
 
 A arquitetura geral do sistema é composta por dois microserviços que se comunicam por meio de uma fila no RabbitMQ:
 
-1. **Serviço em Kotlin**: Este serviço é responsável por criar usuários, validar suas informações e realizar transferências entre eles. Ele utiliza o PostgreSQL como banco de dados para armazenar os usuários criados.
+1. **Serviço em Kotlin**: Este serviço é responsável por criar usuários, validar suas informações e realizar transferências entre eles. Ele utiliza o MongoDB como banco de dados para armazenar os usuários criados.
 
 2. **Serviço em Java**: Recebe payloads de usuários por meio de uma fila no RabbitMQ e os processa. Este serviço utiliza o MongoDB como banco de dados para armazenar os usuários recebidos.
 
@@ -17,7 +17,6 @@ A arquitetura geral do sistema é composta por dois microserviços que se comuni
 - **Kotlin**: Linguagem de programação moderna e concisa, utilizada no desenvolvimento do microserviço responsável pela criação de usuários e transferências.
 - **Java**: Utilizado para o desenvolvimento do microserviço responsável por processar os payloads de usuários.
 - **RabbitMQ**: Sistema de mensagens que permite a comunicação assíncrona entre os microserviços.
-- **PostgreSQL**: Banco de dados relacional utilizado para armazenar os usuários criados pelo serviço em Kotlin.
 - **MongoDB**: Banco de dados NoSQL utilizado para armazenar os usuários processados pelo serviço em Java.
 - **Docker Compose**: Utilizado para facilitar a execução de todos os serviços necessários em contêineres Docker.
 
